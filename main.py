@@ -37,7 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--imgpath', type=str,
                         default='testimgs/outdoor/0143_1_0.2.jpg', help="image path")
     parser.add_argument('--modelpath', type=str,
-                        default='weights/c2pnet_outdoor_360x640.onnx', help="image path")
+                        default='weights/c2pnet_outdoor_360x640.onnx', help="onnx path")
     args = parser.parse_args()
 
     mynet = C2PNet(args.modelpath)
