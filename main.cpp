@@ -3,7 +3,7 @@
 #include <iostream>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
-//#include <cuda_provider_factory.h>  ///Èç¹ûÊ¹ÓÃcuda¼ÓËÙ£¬ĞèÒªÈ¡Ïû×¢ÊÍ
+//#include <cuda_provider_factory.h>  ///å¦‚æœä½¿ç”¨cudaåŠ é€Ÿï¼Œéœ€è¦å–æ¶ˆæ³¨é‡Š
 #include <onnxruntime_cxx_api.h>
 
 using namespace cv;
@@ -34,12 +34,12 @@ private:
 
 C2PNet::C2PNet(string model_path)
 {
-	std::wstring widestr = std::wstring(model_path.begin(), model_path.end());  ////windowsĞ´·¨
-	///OrtStatus* status = OrtSessionOptionsAppendExecutionProvider_CUDA(sessionOptions, 0);   ///Èç¹ûÊ¹ÓÃcuda¼ÓËÙ£¬ĞèÒªÈ¡Ïû×¢ÊÍ
+	std::wstring widestr = std::wstring(model_path.begin(), model_path.end());  ////windowså†™æ³•
+	///OrtStatus* status = OrtSessionOptionsAppendExecutionProvider_CUDA(sessionOptions, 0);   ///å¦‚æœä½¿ç”¨cudaåŠ é€Ÿï¼Œéœ€è¦å–æ¶ˆæ³¨é‡Š
 
 	sessionOptions.SetGraphOptimizationLevel(ORT_ENABLE_BASIC);
-	ort_session = new Session(env, widestr.c_str(), sessionOptions); ////windowsĞ´·¨
-	////ort_session = new Session(env, model_path.c_str(), sessionOptions); ////linuxĞ´·¨
+	ort_session = new Session(env, widestr.c_str(), sessionOptions); ////windowså†™æ³•
+	////ort_session = new Session(env, model_path.c_str(), sessionOptions); ////linuxå†™æ³•
 
 	size_t numInputNodes = ort_session->GetInputCount();
 	size_t numOutputNodes = ort_session->GetOutputCount();
@@ -62,7 +62,7 @@ C2PNet::C2PNet(string model_path)
 		output_node_dims.push_back(output_dims);
 	}
 	
-	this->inpHeight = input_node_dims[0][2]; /// n, h, w, c
+	this->inpHeight = input_node_dims[0][2];
 	this->inpWidth = input_node_dims[0][3];
 	if (this->inpHeight == -1 || this->inpWidth == -1)
 	{
@@ -126,7 +126,7 @@ Mat C2PNet::predict(Mat srcimg)
 	rmat *= 255.f;
 	gmat *= 255.f;
 	bmat *= 255.f;
-	///output_image = µÈ¼Ûnp.clip(output_image, 0, 255)
+	///output_image = ç­‰ä»·np.clip(output_image, 0, 255)
 	rmat.setTo(0, rmat < 0);
 	rmat.setTo(255, rmat > 255);
 	gmat.setTo(0, gmat < 0);
